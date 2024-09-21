@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buah Mangga yang Terlupakan</title>
+    <style>
+        body {
+            background-color: #f4f1ea;
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .book-container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            margin: 50px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            perspective: 1000px;
+        }
+
+        .book {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: translateZ(-300px);
+            transition: transform 1s;
+        }
+
+        .page {
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            position: absolute;
+            left: 0;
+            top: 0;
+            backface-visibility: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: justify;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .page:nth-child(odd) {
+            transform: rotateY(0deg);
+        }
+
+        .page:nth-child(even) {
+            transform: rotateY(-180deg);
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .controls button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .controls button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="book-container">
+    <div class="book" id="book">
+        <div class="page" id="page1">
+            <p><strong>Buah Mangga yang Terlupakan</strong><br><br>
+            Pada suatu hari di sebuah desa yang tenang, hiduplah seorang petani yang dikenal dengan kebun mangga yang luas. Namun anehnya, dia selalu melewatkan pohon mangga di ujung kebunnya...</p>
+        </div>
+        <div class="page" id="page2">
+            <p>Meskipun setiap musim panen tiba, dia selalu memetik mangga-mangganya kecuali dari satu pohon itu. "Pohon itu takkan memberikan buah yang manis," gumamnya.</p>
+        </div>
+        <div class="page" id="page3">
+            <p>Suatu hari, seorang pejalan kaki melintas dan bertanya, "Mengapa pohon itu tidak dipetik buahnya?" Petani menjawab, "Buahnya pasti pahit, karena tak pernah berbuah sebelumnya."</p>
+        </div>
+        <div class="page" id="page4">
+            <p>Pejalan kaki itu tersenyum dan berkata, "Cobalah berpikir berbeda. Mungkin buah di pohon itu adalah yang terbaik, hanya saja Anda tak pernah memberinya kesempatan."</p>
+        </div>
+        <div class="page" id="page5">
+            <p>Dengan rasa penasaran, petani itu memetik buah dari pohon yang selalu dia abaikan. Betapa terkejutnya dia ketika menemukan bahwa buahnya manis dan lebih lezat dari yang lainnya. Inilah pemikiran lateral, melihat sesuatu dari perspektif baru.</p>
+        </div>
+    </div>
+</div>
+
+<div class="controls">
+    <button id="prevPage">Sebelumnya</button>
+    <button id="nextPage">Selanjutnya</button>
+</div>
+
+<audio id="pageFlipSound" src="https://www.soundjay.com/misc/sounds/page-flip-01a.mp3"></audio>
+
+<script>
+    const book = document.getElementById("book");
+    const prevPageButton = document.getElementById("prevPage");
+    const nextPageButton = document.getElementById("nextPage");
+    const pageFlipSound = document.getElementById("pageFlipSound");
+
+    let currentPage = 1;
+    const totalPages = 5;
+
+    function updateBookTransform() {
+        book.style.transform = `translateZ(-300px) rotateY(${(currentPage - 1) * -180}deg)`;
+        pageFlipSound.play();
+    }
+
+    prevPageButton.addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            updateBookTransform();
+        }
+    });
+
+    nextPageButton.addEventListener("click", () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            updateBookTransform();
+        }
+    });
+</script>
+
+</body>
+</html>
